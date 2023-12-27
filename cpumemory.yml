@@ -1,0 +1,22 @@
+---
+- name: Monitor CPU and Memory Usage
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Check CPU usage
+      shell: top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}'
+      register: cpu_usage
+
+    - name: Display CPU usage
+      debug:
+        msg: "CPU Usage: {{ cpu_usage.stdout }}%"
+
+    - name: Check Memory usage
+      command: free | grep Mem | awk '{print $3/$2 * 100.0}'
+      register: mem_usage
+
+    - name: Display Memory usage
+      debug:
+        msg: "Memory Usage: {{ mem_usage.stdout }}%"
+
