@@ -1,0 +1,25 @@
+---
+- name: Check Running Services
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Check running services using systemctl (for systemd-based systems)
+      command: systemctl list-units --type=service --state=running
+      register: running_services_systemd
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Display running services for systemd
+      debug:
+        msg: "{{ running_services_systemd.stdout_lines }}"
+
+    - name: Check running services using service command (for non-systemd systems)
+      command: service --status-all
+      register: running_services_non_systemd
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Display running services for non-systemd
+      debug:
+        msg: "{{ running_services_non_systemd.stdout }}"
