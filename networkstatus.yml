@@ -1,0 +1,29 @@
+---
+- name: Check Network Status
+  hosts: all
+  gather_facts: true
+
+  tasks:
+    - name: Check network interfaces
+      command: ip a
+      register: network_interfaces
+
+    - name: Display network interfaces information
+      debug:
+        msg: "{{ network_interfaces.stdout_lines }}"
+
+    - name: Check routing table
+      command: ip route show
+      register: routing_table
+
+    - name: Display routing table information
+      debug:
+        msg: "{{ routing_table.stdout_lines }}"
+
+    - name: Check listening ports
+      command: ss -tuln
+      register: listening_ports
+
+    - name: Display listening ports information
+      debug:
+        msg: "{{ listening_ports.stdout_lines }}"
