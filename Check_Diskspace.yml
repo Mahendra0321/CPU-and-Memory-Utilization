@@ -6,8 +6,4 @@
     - name: Run df -h command to check disk space
       become: yes  
       command: df -h
-      register: disk_space_output  
-
-    - name: Display disk space information
-      debug:
-        var: disk_space_output.stdout_lines  
+      register: disk_space_output
