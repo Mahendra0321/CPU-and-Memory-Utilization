@@ -1,9 +1,13 @@
 ---
-- name: Check Disk Space on Linux
-  hosts: all  
+- name: Check Disk Space of All Directories on Linux
+  hosts: all 
 
   tasks:
-    - name: Run df -h command to check disk space
+    - name: Get disk space for all directories
       become: yes  
-      command: df -h
-      register: disk_space_output
+      shell: "df -h"
+      register: disk_space_output  
+
+    - name: Display disk space information for all directories
+      debug:
+        var: disk_space_output.stdout_lines  
