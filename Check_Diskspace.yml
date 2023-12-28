@@ -1,13 +1,12 @@
 ---
 - name: Check Disk Space on Linux
-  hosts: your_servers  # Replace 'your_servers' with the appropriate host/group
-
+  hosts: all
   tasks:
     - name: Run df -h command to check disk space
-      become: yes  # This ensures running the command with elevated privileges
+      become: yes  
       command: df -h
-      register: disk_space_output  # Stores the output of the command in a variable
+      register: disk_space_output  
 
     - name: Display disk space information
       debug:
-        var: disk_space_output.stdout_lines  # Display the output of the df -h command
+        var: disk_space_output.stdout_lines  
