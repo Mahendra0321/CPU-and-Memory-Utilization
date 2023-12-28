@@ -1,6 +1,7 @@
 ---
 - name: Check Disk Space on Linux
-  hosts: all
+  hosts: all  
+
   tasks:
     - name: Run df -h command to check disk space
       become: yes  
